@@ -1,0 +1,8 @@
+<?php
+define('_MERCHANT_ID','145227');
+define('_CLIENTE_SECRET','12f071174cb7eb79d4aac5bc2f07563f');
+define('_CLIENTE_LOGIN', '_CLIENTE_LOGIN');
+define('_ACCOUNT_ID', '512321')	;
+define('_INTERVALO_INTENTOS', 1);
+define('_TOTAL_REINTENTOS_RECHAZO',3);
+define('_TOTAL_PENDIENTES', "1");
