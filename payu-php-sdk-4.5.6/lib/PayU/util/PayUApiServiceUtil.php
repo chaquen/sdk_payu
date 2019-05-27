@@ -48,10 +48,16 @@ class PayUApiServiceUtil{
 		if( $responseJson == 200 || $responseJson == 204){
 			return true;
 		}else{
+			if(is_string($responseJson)){
+				$msn=" ERROR:  => ".$responseJson;
+			}else{
+				$msn="";
+			}
+
 			$response = json_decode($responseJson);
 			if(!isset($response)){
-				throw new PayUException(PayUErrorCodes::JSON_DESERIALIZATION_ERROR,sprintf(' Error decoding json. Please verify the json structure received. the json isn\'t added in this message '.
-						' for security reasons please verify the variable $responseJson on class PayUApiServiceUtil'));
+				throw new PayUException(PayUErrorCodes::JSON_DESERIALIZATION_ERROR,sprintf( 'Error decoding json. Please verify the json structure received. the json isn\'t added in this message '.
+						' for security reasons please verify the variable $responseJson on class PayUApiServiceUtil'.$msn));
 			}
 			
 			if($removeNullValues){
@@ -70,6 +76,7 @@ class PayUApiServiceUtil{
 				if(!isset($response->type) || ($response->type != 'BAD_REQUEST' && $response->type != 'NOT_FOUND' && $response->type != 'MALFORMED_REQUEST')){
 					return $response;
 				}else{
+
 					throw new PayUException(PayUErrorCodes::API_ERROR, $response->description);
 				}
 			}

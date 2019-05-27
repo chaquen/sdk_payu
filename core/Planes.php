@@ -5,7 +5,9 @@ require_once 'Config.php';
 Class Planes {
 
 	static function  crear($descripcion,$codigo_plan,$intervalo,$cantidad_intervalos,$moneda,$valor,$impuesto,$base_devolucion,$total_cobros,$dias_de_prueba){
-		$plan = array(
+		
+		if($intervalo == 'DAY' || $intervalo == 'WEEK' || $intervalo == 'MONTH' || $intervalo == 'YEAR'){
+			$plan = array(
 			// Ingresa aquí la descripción del plan
 			PayUParameters::PLAN_DESCRIPTION => $descripcion,
 			// Ingresa aquí el código de identificación para el plan
@@ -39,12 +41,18 @@ Class Planes {
 
 		$response = PayUSubscriptionPlans::create($plan);
 		if($response){
-			return $response->id;
+			return [true,$response->id];
 		}
-		return false;
+			return [false,"no se ha creado el plan"];
+
+			
+		}else{
+			return [false,"debes ingresar un intervalo permitido DAY||WEEK||MONTH||YEAR"];
+		}
+		
 	}
 
-	static function actualizar($nueva_descripcion,$nuevo_codigo,$nueva_moneda,$nuevo_valor,$nuevo_impuesto,$nuevo_retorno_base,$total_rechazos,$total_pendiente){
+	static function actualizar($nueva_descripcion,$nuevo_codigo,$nueva_moneda,$nuevo_valor,$nuevo_impuesto,$nuevo_retorno_base,$intervalos_intentos,$total_rechazos,$total_pendiente){
 		$plan = array(
 			// Ingresa aquí la descripción del plan
 			PayUParameters::PLAN_DESCRIPTION => $nueva_descripcion,
@@ -90,8 +98,9 @@ Class Planes {
 		);
 
 		$response = PayUSubscriptionPlans::delete($parameters);
-		var_dump($response);
+		return $response;
 		if($response) {
+			
 		}
 	}
 }

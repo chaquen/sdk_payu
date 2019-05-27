@@ -2,14 +2,14 @@
 require_once 'Datos.php';
 require_once 'payu-php-sdk-4.5.6/lib/PayU.php';
 
-PayU::$apiKey=_CLIENTE_SECRET;
-PayU::$apiLogin = _CLIENTE_LOGIN; //Ingrese aquí su propio apiLogin.
+PayU::$apiKey=_API_KEY;
+PayU::$apiLogin = _API_LOGIN; //Ingrese aquí su propio apiLogin.
 PayU::$merchantId = _MERCHANT_ID; 
 PayU::$language = SupportedLanguages::ES; //ESPAÑOL.
 PayU::$isTest = true; //Dejarlo True cuando sean pruebas
 //se debe configurar el API para que dirija las peticiones a la URL correspondientes utilizando la clase Environment 
 if(PayU::$isTest){
-	echo "TEST";
+	echo "TEST ";
 	// URL de Pagos
 	$urlPayments="https://sandbox.api.payulatam.com/payments-api/4.0/service.cgi";
 	// URL de Consultas
